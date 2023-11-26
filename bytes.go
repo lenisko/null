@@ -5,7 +5,7 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 
-	"github.com/volatiletech/null/v9/convert"
+	"github.com/lenisko/null/v10/convert"
 )
 
 // NullBytes is a global byte slice of JSON null
@@ -39,6 +39,14 @@ func BytesFromPtr(b *[]byte) Bytes {
 	}
 	n := NewBytes(*b, true)
 	return n
+}
+
+// ValueOrZero returns the inner value if valid, otherwise default.
+func (b Bytes) ValueOrZero() []byte {
+	if !b.Valid {
+		return []byte{}
+	}
+	return b.Bytes
 }
 
 // IsValid returns true if this carries and explicit value and

@@ -7,7 +7,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/volatiletech/null/v9/convert"
+	"github.com/lenisko/null/v10/convert"
 )
 
 // JSON is a nullable []byte that contains JSON.
@@ -46,6 +46,14 @@ func JSONFromPtr(b *[]byte) JSON {
 	return n
 }
 
+// ValueOrZero returns the inner value if valid, otherwise default.
+func (j JSON) ValueOrZero() []byte {
+	if !j.Valid {
+		return []byte{}
+	}
+	return j.JSON
+}
+
 // IsValid returns true if this carries and explicit value and
 // is not null.
 func (j JSON) IsValid() bool {
@@ -80,9 +88,9 @@ func (j JSON) Unmarshal(dest interface{}) error {
 //
 // Example if you have a struct with a null.JSON called v:
 //
-// 		{}          -> does not call unmarshaljson: !set & !valid
-// 		{"v": null} -> calls unmarshaljson, set & !valid
-//      {"v": {}}   -> calls unmarshaljson, set & valid (json value is '{}')
+//			{}          -> does not call unmarshaljson: !set & !valid
+//			{"v": null} -> calls unmarshaljson, set & !valid
+//	     {"v": {}}   -> calls unmarshaljson, set & valid (json value is '{}')
 //
 // That's to say if 'null' is passed in at the json level we do not capture that
 // value - instead we set the value-level null flag so that an sql value will

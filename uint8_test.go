@@ -31,6 +31,18 @@ func TestUint8FromPtr(t *testing.T) {
 	assertNullUint8(t, null, "Uint8FromPtr(nil)")
 }
 
+func TestUint8ValueOrZero(t *testing.T) {
+	valid := NewUint8(1, true)
+	if valid.ValueOrZero() != 1 {
+		t.Error("unexpected ValueOrZero", valid.ValueOrZero())
+	}
+
+	invalid := NewUint8(1, false)
+	if invalid.ValueOrZero() != 0 {
+		t.Error("unexpected ValueOrZero", invalid.ValueOrZero())
+	}
+}
+
 func TestUnmarshalUint8(t *testing.T) {
 	var i Uint8
 	err := json.Unmarshal(uint8JSON, &i)

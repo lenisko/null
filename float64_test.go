@@ -29,6 +29,18 @@ func TestFloat64FromPtr(t *testing.T) {
 	assertNullFloat64(t, null, "Float64FromPtr(nil)")
 }
 
+func TestFloat64ValueOrZero(t *testing.T) {
+	valid := NewFloat64(1.0, true)
+	if valid.ValueOrZero() != 1.0 {
+		t.Error("unexpected ValueOrZero", valid.ValueOrZero())
+	}
+
+	invalid := NewFloat64(1.0, false)
+	if invalid.ValueOrZero() != 0.0 {
+		t.Error("unexpected ValueOrZero", invalid.ValueOrZero())
+	}
+}
+
 func TestUnmarshalFloat64(t *testing.T) {
 	var f Float64
 	err := json.Unmarshal(float64JSON, &f)

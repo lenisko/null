@@ -36,6 +36,14 @@ func ByteFromPtr(b *byte) Byte {
 	return NewByte(*b, true)
 }
 
+// ValueOrZero returns the inner value if valid, otherwise default.
+func (b Byte) ValueOrZero() byte {
+	if !b.Valid {
+		return 0
+	}
+	return b.Byte
+}
+
 // IsValid returns true if this carries and explicit value and
 // is not null.
 func (b Byte) IsValid() bool {

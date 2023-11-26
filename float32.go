@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"strconv"
 
-	"github.com/volatiletech/null/v9/convert"
+	"github.com/lenisko/null/v10/convert"
 )
 
 // Float32 is a nullable float32.
@@ -36,6 +36,14 @@ func Float32FromPtr(f *float32) Float32 {
 		return NewFloat32(0, false)
 	}
 	return NewFloat32(*f, true)
+}
+
+// ValueOrZero returns the inner value if valid, otherwise zero.
+func (f Float32) ValueOrZero() float32 {
+	if !f.Valid {
+		return 0.0
+	}
+	return f.Float32
 }
 
 // IsValid returns true if this carries and explicit value and

@@ -31,6 +31,18 @@ func TestInt64FromPtr(t *testing.T) {
 	assertNullInt64(t, null, "Int64FromPtr(nil)")
 }
 
+func TestInt64ValueOrZero(t *testing.T) {
+	valid := NewInt64(1, true)
+	if valid.ValueOrZero() != 1 {
+		t.Error("unexpected ValueOrZero", valid.ValueOrZero())
+	}
+
+	invalid := NewInt64(1, false)
+	if invalid.ValueOrZero() != 0 {
+		t.Error("unexpected ValueOrZero", invalid.ValueOrZero())
+	}
+}
+
 func TestUnmarshalInt64(t *testing.T) {
 	var i Int64
 	err := json.Unmarshal(int64JSON, &i)

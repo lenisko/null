@@ -8,7 +8,7 @@ import (
 	"math"
 	"strconv"
 
-	"github.com/volatiletech/null/v9/convert"
+	"github.com/lenisko/null/v10/convert"
 )
 
 // Int32 is an nullable int32.
@@ -38,6 +38,14 @@ func Int32FromPtr(i *int32) Int32 {
 		return NewInt32(0, false)
 	}
 	return NewInt32(*i, true)
+}
+
+// ValueOrZero returns the inner value if valid, otherwise default.
+func (i Int32) ValueOrZero() int32 {
+	if !i.Valid {
+		return 0
+	}
+	return i.Int32
 }
 
 // IsValid returns true if this carries and explicit value and

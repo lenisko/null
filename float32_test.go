@@ -29,6 +29,18 @@ func TestFloat32FromPtr(t *testing.T) {
 	assertNullFloat32(t, null, "Float32FromPtr(nil)")
 }
 
+func TestFloat32ValueOrZero(t *testing.T) {
+	valid := NewFloat32(1.0, true)
+	if valid.ValueOrZero() != 1.0 {
+		t.Error("unexpected ValueOrZero", valid.ValueOrZero())
+	}
+
+	invalid := NewFloat32(1.0, false)
+	if invalid.ValueOrZero() != 0.0 {
+		t.Error("unexpected ValueOrZero", invalid.ValueOrZero())
+	}
+}
+
 func TestUnmarshalFloat32(t *testing.T) {
 	var f Float32
 	err := json.Unmarshal(float32JSON, &f)

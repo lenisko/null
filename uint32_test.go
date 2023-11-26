@@ -31,6 +31,18 @@ func TestUint32FromPtr(t *testing.T) {
 	assertNullUint32(t, null, "Uint32FromPtr(nil)")
 }
 
+func TestUint32ValueOrZero(t *testing.T) {
+	valid := NewUint32(1, true)
+	if valid.ValueOrZero() != 1 {
+		t.Error("unexpected ValueOrZero", valid.ValueOrZero())
+	}
+
+	invalid := NewUint32(1, false)
+	if invalid.ValueOrZero() != 0 {
+		t.Error("unexpected ValueOrZero", invalid.ValueOrZero())
+	}
+}
+
 func TestUnmarshalUint32(t *testing.T) {
 	var i Uint32
 	err := json.Unmarshal(uint32JSON, &i)

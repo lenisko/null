@@ -36,6 +36,14 @@ func TimeFromPtr(t *time.Time) Time {
 	return NewTime(*t, true)
 }
 
+// ValueOrZero returns the inner value if valid, otherwise default.
+func (t Time) ValueOrZero() time.Time {
+	if !t.Valid {
+		return time.Time{}
+	}
+	return t.Time
+}
+
 // IsValid returns true if this carries and explicit value and
 // is not null.
 func (t Time) IsValid() bool {

@@ -3,6 +3,7 @@ package null
 import (
 	"bytes"
 	"encoding/json"
+	"reflect"
 	"testing"
 )
 
@@ -35,6 +36,18 @@ func TestBytesFromPtr(t *testing.T) {
 
 	null := BytesFromPtr(nil)
 	assertNullBytes(t, null, "BytesFromPtr(nil)")
+}
+
+func TestBytesValueOrZero(t *testing.T) {
+	valid := NewBytes([]byte{1}, true)
+	if !reflect.DeepEqual(valid.ValueOrZero(), []byte{1}) {
+		t.Error("unexpected ValueOrZero", valid.ValueOrZero())
+	}
+
+	invalid := NewBytes([]byte{1}, false)
+	if reflect.DeepEqual(valid.ValueOrZero(), []byte{}) {
+		t.Error("unexpected ValueOrZero", invalid.ValueOrZero())
+	}
 }
 
 func TestUnmarshalBytes(t *testing.T) {

@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"strconv"
 
-	"github.com/volatiletech/null/v9/convert"
+	"github.com/lenisko/null/v10/convert"
 )
 
 // Float64 is a nullable float64.
@@ -36,6 +36,14 @@ func Float64FromPtr(f *float64) Float64 {
 		return NewFloat64(0, false)
 	}
 	return NewFloat64(*f, true)
+}
+
+// ValueOrZero returns the inner value if valid, otherwise zero.
+func (f Float64) ValueOrZero() float64 {
+	if !f.Valid {
+		return 0.0
+	}
+	return f.Float64
 }
 
 // IsValid returns true if this carries and explicit value and

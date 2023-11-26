@@ -8,7 +8,7 @@ import (
 	"math"
 	"strconv"
 
-	"github.com/volatiletech/null/v9/convert"
+	"github.com/lenisko/null/v10/convert"
 )
 
 // Uint32 is an nullable uint32.
@@ -38,6 +38,14 @@ func Uint32FromPtr(i *uint32) Uint32 {
 		return NewUint32(0, false)
 	}
 	return NewUint32(*i, true)
+}
+
+// ValueOrZero returns the inner value if valid, otherwise default.
+func (u Uint32) ValueOrZero() uint32 {
+	if !u.Valid {
+		return 0
+	}
+	return u.Uint32
 }
 
 // IsValid returns true if this carries and explicit value and

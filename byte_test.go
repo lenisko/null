@@ -25,6 +25,18 @@ func TestByteFromPtr(t *testing.T) {
 	assertNullByte(t, null, "ByteFromPtr(nil)")
 }
 
+func TestByteValueOrZero(t *testing.T) {
+	valid := NewByte(1, true)
+	if valid.ValueOrZero() != 1 {
+		t.Error("unexpected ValueOrZero", valid.ValueOrZero())
+	}
+
+	invalid := NewByte(1, false)
+	if invalid.ValueOrZero() != 0 {
+		t.Error("unexpected ValueOrZero", invalid.ValueOrZero())
+	}
+}
+
 func TestUnmarshalByte(t *testing.T) {
 	var null Byte
 	err := json.Unmarshal(nullJSON, &null)

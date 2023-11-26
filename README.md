@@ -19,7 +19,7 @@ Null used to be versioned with gopkg.in, so once you upgrade to v8 and beyond
 please stop using gopkg.in and ensure you're using go modules.
 
 ```
-go get github.com/volatiletech/null/v9
+go get github.com/lenisko/null/v10
 ```
 
 ### Usage

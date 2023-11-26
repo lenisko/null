@@ -3,6 +3,7 @@ package null
 import (
 	"bytes"
 	"encoding/json"
+	"reflect"
 	"testing"
 )
 
@@ -37,6 +38,18 @@ func TestJSONFromPtr(t *testing.T) {
 
 	null := JSONFromPtr(nil)
 	assertNullJSON(t, null, "JSONFromPtr(nil)")
+}
+
+func TestJSONValueOrZero(t *testing.T) {
+	valid := NewJSON([]byte{1}, true)
+	if !reflect.DeepEqual(valid.ValueOrZero(), []byte{1}) {
+		t.Error("unexpected ValueOrZero", valid.ValueOrZero())
+	}
+
+	invalid := NewJSON([]byte{1}, false)
+	if reflect.DeepEqual(invalid.ValueOrZero(), []byte{1}) {
+		t.Error("unexpected ValueOrZero", valid.ValueOrZero())
+	}
 }
 
 type Test struct {

@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"strconv"
 
-	"github.com/volatiletech/null/v9/convert"
+	"github.com/lenisko/null/v10/convert"
 )
 
 // Int64 is an nullable int64.
@@ -36,6 +36,14 @@ func Int64FromPtr(i *int64) Int64 {
 		return NewInt64(0, false)
 	}
 	return NewInt64(*i, true)
+}
+
+// ValueOrZero returns the inner value if valid, otherwise default.
+func (i Int64) ValueOrZero() int64 {
+	if !i.Valid {
+		return 0
+	}
+	return i.Int64
 }
 
 // IsValid returns true if this carries and explicit value and

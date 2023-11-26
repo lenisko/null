@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"strconv"
 
-	"github.com/volatiletech/null/v9/convert"
+	"github.com/lenisko/null/v10/convert"
 )
 
 // Uint64 is an nullable uint64.
@@ -36,6 +36,14 @@ func Uint64FromPtr(i *uint64) Uint64 {
 		return NewUint64(0, false)
 	}
 	return NewUint64(*i, true)
+}
+
+// ValueOrZero returns the inner value if valid, otherwise default.
+func (u Uint64) ValueOrZero() uint64 {
+	if !u.Valid {
+		return 0
+	}
+	return u.Uint64
 }
 
 // IsValid returns true if this carries and explicit value and

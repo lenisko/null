@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"strconv"
 
-	"github.com/volatiletech/null/v9/convert"
+	"github.com/lenisko/null/v10/convert"
 )
 
 // Int is an nullable int.
@@ -36,6 +36,14 @@ func IntFromPtr(i *int) Int {
 		return NewInt(0, false)
 	}
 	return NewInt(*i, true)
+}
+
+// ValueOrZero returns the inner value if valid, otherwise default.
+func (i Int) ValueOrZero() int {
+	if !i.Valid {
+		return 0
+	}
+	return i.Int
 }
 
 // IsValid returns true if this carries and explicit value and

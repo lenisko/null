@@ -2,6 +2,7 @@ package null
 
 import (
 	"encoding/json"
+	"errors"
 	"testing"
 	"time"
 )
@@ -30,8 +31,9 @@ func TestUnmarshalTimeJSON(t *testing.T) {
 
 	var invalid Time
 	err = invalid.UnmarshalJSON(invalidJSON)
-	if _, ok := err.(*time.ParseError); !ok {
-		t.Errorf("expected json.ParseError, not %T", err)
+	var syntaxError *time.ParseError
+	if !errors.As(err, &syntaxError) {
+		t.Errorf("expected wrapped time.ParseError, not %T", err)
 	}
 	assertNullTime(t, invalid, "invalid from object json")
 
@@ -92,6 +94,21 @@ func TestTimeFromPtr(t *testing.T) {
 
 	null := TimeFromPtr(nil)
 	assertNullTime(t, null, "TimeFromPtr(nil)")
+}
+
+func TestTimeValueOrZero(t *testing.T) {
+	now := time.Now()
+
+	valid := NewTime(now, true)
+	if valid.ValueOrZero() != now {
+		t.Error("unexpected ValueOrZero", valid.ValueOrZero())
+	}
+
+	defaultTime := time.Time{}
+	invalid := NewTime(now, false)
+	if invalid.ValueOrZero() != defaultTime {
+		t.Error("unexpected ValueOrZero", invalid.ValueOrZero())
+	}
 }
 
 func TestTimeSetValid(t *testing.T) {

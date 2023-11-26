@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/volatiletech/null/v9/convert"
+	"github.com/lenisko/null/v10/convert"
 )
 
 // Bool is a nullable bool.
@@ -36,6 +36,11 @@ func BoolFromPtr(b *bool) Bool {
 		return NewBool(false, false)
 	}
 	return NewBool(*b, true)
+}
+
+// ValueOrZero returns the inner value if valid, otherwise false.
+func (b Bool) ValueOrZero() bool {
+	return b.Valid && b.Bool
 }
 
 // IsValid returns true if this carries and explicit value and

@@ -8,7 +8,7 @@ import (
 	"math"
 	"strconv"
 
-	"github.com/volatiletech/null/v9/convert"
+	"github.com/lenisko/null/v10/convert"
 )
 
 // Int8 is an nullable int8.
@@ -38,6 +38,14 @@ func Int8FromPtr(i *int8) Int8 {
 		return NewInt8(0, false)
 	}
 	return NewInt8(*i, true)
+}
+
+// ValueOrZero returns the inner value if valid, otherwise default.
+func (i Int8) ValueOrZero() int8 {
+	if !i.Valid {
+		return 0
+	}
+	return i.Int8
 }
 
 // IsValid returns true if this carries and explicit value and

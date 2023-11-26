@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"strconv"
 
-	"github.com/volatiletech/null/v9/convert"
+	"github.com/lenisko/null/v10/convert"
 )
 
 // Uint is an nullable uint.
@@ -36,6 +36,14 @@ func UintFromPtr(i *uint) Uint {
 		return NewUint(0, false)
 	}
 	return NewUint(*i, true)
+}
+
+// ValueOrZero returns the inner value if valid, otherwise default.
+func (u Uint) ValueOrZero() uint {
+	if !u.Valid {
+		return 0
+	}
+	return u.Uint
 }
 
 // IsValid returns true if this carries and explicit value and

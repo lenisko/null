@@ -5,7 +5,7 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 
-	"github.com/volatiletech/null/v9/convert"
+	"github.com/lenisko/null/v10/convert"
 )
 
 // String is a nullable string. It supports SQL and JSON serialization.
@@ -26,6 +26,14 @@ func StringFromPtr(s *string) String {
 		return NewString("", false)
 	}
 	return NewString(*s, true)
+}
+
+// ValueOrZero returns the inner value if valid, otherwise default.
+func (s String) ValueOrZero() string {
+	if !s.Valid {
+		return ""
+	}
+	return s.String
 }
 
 // NewString creates a new String

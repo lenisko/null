@@ -31,6 +31,18 @@ func TestInt32FromPtr(t *testing.T) {
 	assertNullInt32(t, null, "Int32FromPtr(nil)")
 }
 
+func TestInt32ValueOrZero(t *testing.T) {
+	valid := NewInt32(1, true)
+	if valid.ValueOrZero() != 1 {
+		t.Error("unexpected ValueOrZero", valid.ValueOrZero())
+	}
+
+	invalid := NewInt32(1, false)
+	if invalid.ValueOrZero() != 0 {
+		t.Error("unexpected ValueOrZero", invalid.ValueOrZero())
+	}
+}
+
 func TestUnmarshalInt32(t *testing.T) {
 	var i Int32
 	err := json.Unmarshal(int32JSON, &i)

@@ -31,6 +31,18 @@ func TestUint16FromPtr(t *testing.T) {
 	assertNullUint16(t, null, "Uint16FromPtr(nil)")
 }
 
+func TestUint16ValueOrZero(t *testing.T) {
+	valid := NewUint16(1, true)
+	if valid.ValueOrZero() != 1 {
+		t.Error("unexpected ValueOrZero", valid.ValueOrZero())
+	}
+
+	invalid := NewUint16(1, false)
+	if invalid.ValueOrZero() != 0 {
+		t.Error("unexpected ValueOrZero", invalid.ValueOrZero())
+	}
+}
+
 func TestUnmarshalUint16(t *testing.T) {
 	var i Uint16
 	err := json.Unmarshal(uint16JSON, &i)

@@ -8,7 +8,7 @@ import (
 	"math"
 	"strconv"
 
-	"github.com/volatiletech/null/v9/convert"
+	"github.com/lenisko/null/v10/convert"
 )
 
 // Int16 is an nullable int16.
@@ -38,6 +38,14 @@ func Int16FromPtr(i *int16) Int16 {
 		return NewInt16(0, false)
 	}
 	return NewInt16(*i, true)
+}
+
+// ValueOrZero returns the inner value if valid, otherwise default.
+func (i Int16) ValueOrZero() int16 {
+	if !i.Valid {
+		return 0
+	}
+	return i.Int16
 }
 
 // IsValid returns true if this carries and explicit value and

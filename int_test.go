@@ -29,6 +29,18 @@ func TestIntFromPtr(t *testing.T) {
 	assertNullInt(t, null, "IntFromPtr(nil)")
 }
 
+func TestIntValueOrZero(t *testing.T) {
+	valid := NewInt(1, true)
+	if valid.ValueOrZero() != 1 {
+		t.Error("unexpected ValueOrZero", valid.ValueOrZero())
+	}
+
+	invalid := NewInt(1, false)
+	if invalid.ValueOrZero() != 0 {
+		t.Error("unexpected ValueOrZero", invalid.ValueOrZero())
+	}
+}
+
 func TestUnmarshalInt(t *testing.T) {
 	var i Int
 	err := json.Unmarshal(intJSON, &i)
